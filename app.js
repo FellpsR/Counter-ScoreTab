@@ -40,6 +40,8 @@ function exibirTela() {
             <td><button onClick="adicionarVitoria('${jogador.nome}')">Vitória</button></td>
             <td><button onClick="adicionarEmpate('${jogador.nome}')">Empate</button></td>
             <td><button onClick="adicionarDerrota('${jogador.nome}')">Derrota</button></td>
+            <td><button onClick="limparPontos('${jogador.nome}')">Limpar Pontos</button></td>
+            <td><button onClick="excluirJogador('${jogador.nome}')">Excluir Jogador</button></td>
      </tr>`;
   }
 }
@@ -64,17 +66,39 @@ function adicionarDerrota(nome) {
   exibirTela();
 }
 
+function limparPontos(nome) {
+  var jogador = encontrarJogadorPorNome(nome);
+  jogador.vitoria = 0;
+  jogador.empate = 0;
+  jogador.derrota = 0;
+  jogador.pontos = 0;
+  exibirTela();
+}
+
 function encontrarJogadorPorNome(nome) {
   return listaJogadores.find(function (jogador) {
     return jogador.nome === nome;
   });
 }
 
+
+//validar se o jogador está sendo excluido
+function excluirJogador(nome) {
+  var jogador = encontrarJogadorPorNome(nome);
+  var index = listaJogadores.indexOf(jogador);
+  if (index > -1) {
+    listaJogadores.splice(index, 1);
+  }
+  exibirTela();
+}
+
+//limpar todos os jogadores
 function resetGame() {
   listaJogadores = [];
   exibirTela();
 }
 
+//limpar campo de inserção de jogadores a cada nova inserção
 function limpaCampos() {
   document.getElementById("jogador").value = "";
 }
